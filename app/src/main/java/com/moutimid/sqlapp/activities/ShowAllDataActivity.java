@@ -35,6 +35,15 @@ public class ShowAllDataActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ListView listView = findViewById(R.id.listView);
+        CustomAdapter adapter = new CustomAdapter(this, itemName, itemDetails, itemTexts, itemImages);
+        listView.setAdapter(adapter);
+
+    }
+
     public void BackPress(View view) {
         onBackPressed();
     }

@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moutimid.sqlapp.R;
-import com.moutimid.sqlapp.activities.DetailsActivity;
-import com.moutimid.sqlapp.activities.SavedDataActivity;
 import com.moutimid.sqlapp.activities.SavedDetailsActivity;
 import com.moutimid.sqlapp.helper.DataModel;
+import com.moutimid.sqlapp.helper.DatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -44,9 +43,10 @@ public class CustomListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.list_item_layout, parent, false);
+        View itemView = inflater.inflate(R.layout.saved_list_item_layout, parent, false);
 
         ImageView imageView = itemView.findViewById(R.id.imageView);
+        ImageView remove = itemView.findViewById(R.id.remove);
         TextView textView = itemView.findViewById(R.id.textView);
         TextView textView1 = itemView.findViewById(R.id.textView1);
 
@@ -54,6 +54,19 @@ public class CustomListAdapter extends BaseAdapter {
         imageView.setImageResource(data.getImage());
         textView.setText(data.getName());
         textView1.setText(data.getAddress());
+        DatabaseHelper dbHelper;
+        dbHelper = new DatabaseHelper(context);
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dbHelper.deleteData(data.getName(), data.getAddress(),data.getDetails(), data.getImage());
+                dataList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
