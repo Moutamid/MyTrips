@@ -2,12 +2,15 @@ package com.moutimid.sqlapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.moutimid.sqlapp.MainActivity;
 import com.moutimid.sqlapp.R;
 import com.moutimid.sqlapp.helper.DatabaseHelper;
 
@@ -41,4 +44,25 @@ public class SavedDetailsActivity extends AppCompatActivity {
     public void BackPress(View view) {
         onBackPressed();
     }
+
+    public void menu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu, popupMenu.getMenu());
+
+        // Optional: Set a listener to respond to menu item clicks
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if ((item.getItemId() == R.id.menu_item_1)) {
+                    startActivity(new Intent(SavedDetailsActivity.this, MainActivity.class));
+                    finishAffinity();
+                }
+                return true;
+            }
+        });
+
+        popupMenu.show();
+
+    }
+
 }
