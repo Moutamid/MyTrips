@@ -58,4 +58,14 @@ public class SavedDataActivity extends AppCompatActivity {
         popupMenu.show();
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbHelper = new DatabaseHelper(this);
+        dataList = dbHelper.getAllData();
+
+        ListView listView = findViewById(R.id.listView);
+        adapter = new CustomListAdapter(this, dataList);
+        listView.setAdapter(adapter);}
 }

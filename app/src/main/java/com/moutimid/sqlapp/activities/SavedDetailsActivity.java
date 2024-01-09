@@ -18,6 +18,8 @@ public class SavedDetailsActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
     String name, address, details;
     int imageResource;
+    ImageView add, delete;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,15 @@ public class SavedDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         dbHelper = new DatabaseHelper(this);
         Intent intent = getIntent();
+        add = findViewById(R.id.add);
+        delete = findViewById(R.id.delete);
+
 
         if (intent != null) {
-             name = intent.getStringExtra("name");
+            name = intent.getStringExtra("name");
             address = intent.getStringExtra("address");
-             details = intent.getStringExtra("details");
-             imageResource = intent.getIntExtra("image", 0);
+            details = intent.getStringExtra("details");
+            imageResource = intent.getIntExtra("image", 0);
 
             TextView textView = findViewById(R.id.text);
             TextView title = findViewById(R.id.title);
@@ -40,6 +45,23 @@ public class SavedDetailsActivity extends AppCompatActivity {
             title.setText(name);
             imageView.setImageResource(imageResource);
         }
+        if (!dbHelper.checkDataExists(name, address, details, imageResource)) {
+            add.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.GONE);
+        } else {
+            add.setVisibility(View.GONE);
+            delete.setVisibility(View.VISIBLE);
+        }
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete data from the database
+                dbHelper.deleteData(name, address, details, imageResource);
+//                add.setVisibility(View.VISIBLE);
+//                delete.setVisibility(View.GONE);
+                finish();
+            }
+        });
     }
     public void BackPress(View view) {
         onBackPressed();
