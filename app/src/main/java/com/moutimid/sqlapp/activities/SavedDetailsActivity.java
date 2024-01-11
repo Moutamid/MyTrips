@@ -52,12 +52,21 @@ public class SavedDetailsActivity extends AppCompatActivity {
             add.setVisibility(View.GONE);
             delete.setVisibility(View.VISIBLE);
         }
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Add data to the database
+                dbHelper.insertData(name, address, details, imageResource);
+                add.setVisibility(View.GONE);
+                delete.setVisibility(View.VISIBLE);
+            }
+        });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Delete data from the database
                 dbHelper.deleteData(name, address, details, imageResource);
-//                add.setVisibility(View.VISIBLE);
+                add.setVisibility(View.VISIBLE);
                 delete.setVisibility(View.GONE);
 //                finish();
             }
