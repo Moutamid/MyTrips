@@ -58,8 +58,8 @@ public class SavedDetailsActivity extends AppCompatActivity {
                 // Delete data from the database
                 dbHelper.deleteData(name, address, details, imageResource);
 //                add.setVisibility(View.VISIBLE);
-//                delete.setVisibility(View.GONE);
-                finish();
+                delete.setVisibility(View.GONE);
+//                finish();
             }
         });
     }
